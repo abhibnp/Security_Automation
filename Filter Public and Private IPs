@@ -1,1 +1,29 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Jun 23 19:57:31 2022
 
+@author: 10077269
+"""
+
+import csv
+
+allfp = open(r'C:\Users\10077269\Downloads\New_IP_List.txt')
+publicfp = open(r'C:\Users\10077269\Downloads\public.txt', 'w')
+privatefp = open(r'C:\Users\10077269\Downloads\private.txt', 'w')
+
+def is_public_ip(ip):
+    ip = list(map(int, ip.strip().split('.')[:2]))
+    if ip[0] == 10: return False
+    if ip[0] == 172 and ip[1] in range(16, 32): return False
+    if ip[0] == 192 and ip[1] == 168: return False
+    return True
+
+for line in allfp:
+    if is_public_ip(line):
+        publicfp.write(line)
+    else:
+        privatefp.write(line)
+
+allfp.close()
+publicfp.close()
+privatefp.close()
